@@ -7,13 +7,12 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 
-        plugin = {"pretty",
-                "json:target/cucumber.json",
-                "utils.formatter.PrettyReports:target/cucumber-pretty-reports"
-        },
+        plugin = {"html:target/cucumber-reports.html",
+                "json:target/json-reports/cucumber.json",
+                "junit:target/xml-report/cucumber.xml"},
         features = "src/test/resources/features",
         glue="stepdefinitions",
-        tags="@smoke" ,
+        tags="@wip" ,
         dryRun = false
 )
 public class Runner {
