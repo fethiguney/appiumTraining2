@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-public class Driver {
+public class MobileDriver {
 
     private static AppiumDriver<MobileElement>appiumDriver;
 

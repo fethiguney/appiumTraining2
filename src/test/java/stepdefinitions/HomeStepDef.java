@@ -1,20 +1,19 @@
 package stepdefinitions;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import pages.HomePage;
-import utilities.Driver;
+import utilities.MobileDriver;
+import utilities.WebDriver;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 
 public class HomeStepDef {
     HomePage homePage=new HomePage();
 
     @Given("^user is on the app?")
     public void user_is_on_the_app(){
-        Driver.getAppiumDriver();
+        MobileDriver.getAppiumDriver();
     }
 
     @Then("^user validates the welcome text \"([^\"]*)\"?")
@@ -29,4 +28,8 @@ public class HomeStepDef {
         homePage.buttonOK.click();
     }
 
+    @Then("^user goes to havas cms and login with valid credentials?")
+    public void user_goes_to_havas_cms_and_login_with_valid_credentials(){
+        WebDriver.getWebDriver().get("http://havas-approncms.nuevotest.com/");
+    }
 }
