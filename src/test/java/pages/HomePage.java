@@ -1,8 +1,9 @@
 package pages;
 
-import io.appium.java_client.MobileElement;
+
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utilities.MobileDriver;
 
@@ -16,16 +17,16 @@ public class HomePage {
 
         @AndroidFindBy (xpath = "//android.widget.TextView[@text='Tickets and travel passes\n" +
                 "wherever and whenever you want!']")
-        public MobileElement welcomeText;
+        public WebElement welcomeText;
 
         @AndroidFindBy (xpath = "//android.widget.TextView[@text='Later']")
-        public MobileElement buttonLater;
+        public WebElement buttonLater;
 
         @AndroidFindBy (xpath = "//android.widget.Image[@text='checked CGU/CGV']")
-        public MobileElement buttonCheck;
+        public WebElement buttonCheck;
 
         @AndroidFindBy (xpath = "//android.widget.TextView[@text='OK']")
-        public MobileElement buttonOK;
+        public WebElement buttonOK;
 
 
 

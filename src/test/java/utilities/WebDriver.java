@@ -1,7 +1,5 @@
 package utilities;
 
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,6 +7,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriver {
@@ -29,11 +28,7 @@ public class WebDriver {
                 case "chrome":
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--remote-allow-origins=*");
-                    WebDriverManager.chromedriver().setup();
                     webDriver = new ChromeDriver();
-                    break;
-                case "chrome-headless":
-                    webDriver = new ChromeDriver(new ChromeOptions().setHeadless(true));
                     break;
                 case "edge"    :
                     webDriver =new EdgeDriver();
@@ -49,7 +44,7 @@ public class WebDriver {
             }
         }
         webDriver.manage().window().maximize();
-        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return webDriver;
     }
 

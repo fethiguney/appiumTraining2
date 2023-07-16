@@ -1,62 +1,53 @@
 package utilities;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.options.UiAutomator2Options;
+
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class MobileDriver {
 
-    private static AppiumDriver<MobileElement>appiumDriver;
+    private static UiAutomator2Options options;
+    private static AppiumDriver driver;
 
     public static AppiumDriver getAppiumDriver() {
 
-        URL appiumServerURL = null;
-
-        try {
-            appiumServerURL = new URL("http:0.0.0.0:4723/wd/hub");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-
-        if (appiumDriver ==null){
-
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.setCapability(MobileCapabilityType.AUTOMATION_NAME,ConfigReader.getProperty("automationName"));
-            caps.setCapability(MobileCapabilityType.PLATFORM_NAME,ConfigReader.getProperty("platformName"));
-            caps.setCapability(MobileCapabilityType.PLATFORM_VERSION,ConfigReader.getProperty("platformVersion"));
-            caps.setCapability(MobileCapabilityType.DEVICE_NAME,ConfigReader.getProperty("deviceName"));
-            caps.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,ConfigReader.getProperty("appPackage"));
-            caps.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,ConfigReader.getProperty("appActivity"));
+        if (driver == null) {
+            switch (ConfigReader.getProperty("platformName")) {
+                case "Android":
+                    options = new UiAutomator2Options()
+                            .setAppPackage(ConfigReader.getProperty("appPackage"))
+                            .setAppActivity(ConfigReader.getProperty("appActivity"))
+                            .setUdid("emulator-5554")
+                            .setAutomationName("uiautomator2")
+                            .setNoReset(false)
+                            .setNewCommandTimeout(Duration.ofMinutes(10));
 
 
+                    try {
+                        driver = new AndroidDriver(
+                                new URL("http://127.0.0.1:4723"), options
+                        );
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
 
-            if (ConfigReader.getProperty("platformName").equals("Android")) {
-                appiumDriver = new AndroidDriver<>(appiumServerURL,caps);
-                appiumDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            }else {
-
-                throw new UnsupportedOperationException("Invalid Platform Name " + ConfigReader.getProperty("platformName"));
+                case "IOS":
 
             }
-
         }
-
-        return appiumDriver;
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        return driver;
     }
 
-
-    public static void quitAppiumDriver(){
-        if (appiumDriver != null) {
-            appiumDriver.quit();
-            appiumDriver = null;
+    public static void closeDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
         }
     }
 }

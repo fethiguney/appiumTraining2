@@ -30,6 +30,6 @@ public class HomeStepDef {
 
     @Then("^user goes to havas cms and login with valid credentials?")
     public void user_goes_to_havas_cms_and_login_with_valid_credentials(){
-        WebDriver.getWebDriver().get("http://havas-approncms.nuevotest.com/");
+        WebDriver.getWebDriver().get("http://amazon.com/");
     }
 }
